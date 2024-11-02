@@ -1,4 +1,4 @@
-FROM node:20.17.0
+FROM node:18-alpine
 
 # RUN addgroup app && adduser -S -G app app
 # USER app
