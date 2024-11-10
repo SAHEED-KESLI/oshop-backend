@@ -12,7 +12,7 @@ services:
 
     volumes:
       - .:/app
-    command: ./docker-entrypoint.sh
+    command: npm start
 
   db:
     image: postgres:14
