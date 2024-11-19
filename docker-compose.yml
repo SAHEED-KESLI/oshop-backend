@@ -1,35 +1,33 @@
 services:
   api:
     build: .
-    depends_on:
-      db:
-        condition: service_healthy
+    # depends_on:
+    #   db:
+    #     condition: service_healthy
     restart: always
     ports:
       - 3000:3000
     environment:
-      DATABASE_URL: postgresql://postgres:123@db:5432/booker_db
+      DATABASE_URL: postgresql://postgres:123@db:5432/oshop_db
+      PORT: 3000
+      JWT_SECRET: jwt-secret
+      JWT_EXPIRATION: 5m
+      STRIPE_PRIVATE_KEY: sk_test_51Q9MQ6LcMsBsaU3L7VHN0U3o5lwp33aAeOwCB26kJiG5d8D8pkv3OiJs3DdoyqHz4DK73cbMVpXBXB1CVIexQaIT00lsqwYeOF
+      STRIPE_PUBLIC_KEY: pk_test_51Q9MQ6LcMsBsaU3LX1VNhUTPBdoozZaUUibKkZGuIPMedPOotMg2QKWWH2aJQ3s2yqjL0mDXxhG16PVuCTtADUlY00uKchLIP8
 
     volumes:
       - .:/app
-    command: npm start
+    # command: sh -c "npx prisma migrate deploy && npm run start && tail -f /dev/null"
 
   db:
-    image: postgres:14
+    image: postgres:12
     ports:
-      - 5432:5432
+      - 2002:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123
-      POSTGRES_DB: booker_db
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      retries: 5
-      start_period: 30s
-      timeout: 10s
+      POSTGRES_DB: oshop_db
     volumes:
-      - db-data:/var/lib/postgresql/data
-
+      - oshop_db:/var/lib/postgresql/data
 volumes:
-  db-data:
+  oshop_db:

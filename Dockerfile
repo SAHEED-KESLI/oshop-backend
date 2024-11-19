@@ -8,7 +8,7 @@ COPY package*.json .
 RUN npm install
 COPY . . 
 
-ENV  DATABASE_URL=postgresql://postgres:123@db:5432/booker_db?schema=public
+ENV  DATABASE_URL=postgresql://postgres:123@localhost:5432/booker_db?schema=public
 ENV  PORT=3000
 ENV  JWT_SECRET=jwt-secret
 ENV  JWT_EXPIRATION=5m
